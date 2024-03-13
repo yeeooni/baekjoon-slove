@@ -21,3 +21,4 @@
 - [ ] AWS EC2 인스턴스를 이용하여 Docker-compose 설치
 - [ ] Docker 컨테이너를 이용하고 App을 외부에서 접근이 가능하도록 구현
 - [X] build.gradle file added
+- [X] jar deploy
