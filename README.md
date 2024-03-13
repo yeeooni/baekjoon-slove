@@ -18,5 +18,6 @@
 - 올바른 값이 output.txt에 저장되었는지 확인
 
 ### 📋추가예정
-- AWS EC2 인스턴스를 이용하여 Docker-compose 설치
-- Docker 컨테이너를 이용하고 App을 외부에서 접근이 가능하도록 구현
+- [ ] AWS EC2 인스턴스를 이용하여 Docker-compose 설치
+- [ ] Docker 컨테이너를 이용하고 App을 외부에서 접근이 가능하도록 구현
+- [X] build.gradle file added
