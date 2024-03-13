@@ -13,7 +13,7 @@ import java.io.*;
  * 정답율: 35%
  * 수행시간: 120ms
 **/
-public class Solution_10171 {
+public class $_10171 {
     public static void main(String[] args) {
         try(BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))){
             StringBuilder sb = new StringBuilder();

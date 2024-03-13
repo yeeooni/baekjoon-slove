@@ -16,13 +16,12 @@ import java.util.StringTokenizer;
  * 수행시간: 220ms -> 132ms 단축
 **/
 
-public class Solution_1008 {
+public class $_1008 {
     public static void main(String[] args) {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))){
 
             StringTokenizer st = new StringTokenizer(br.readLine());
-
             double a = Double.parseDouble(st.nextToken()), b = Double.parseDouble(st.nextToken());
 
             bw.write(String.valueOf(a / b));

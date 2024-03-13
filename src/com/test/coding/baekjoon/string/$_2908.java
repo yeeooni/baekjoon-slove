@@ -15,7 +15,7 @@ import java.util.StringTokenizer;
  * 정답율: 69%
  * 수행시간: 128ms
 **/
-public class Solution_2908 {
+public class $_2908 {
     public static void main(String[] args) {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))){
