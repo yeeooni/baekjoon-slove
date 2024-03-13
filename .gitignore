@@ -30,3 +30,4 @@ bin/
 
 .idea
 baekjoon-slove.iml
+resources/*
