@@ -1,4 +1,4 @@
-package com.exam.baekjoon.string;
+package com.test.coding.baekjoon.string;
 import java.io.*;
 import java.util.StringTokenizer;
 
