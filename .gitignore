@@ -33,3 +33,4 @@ baekjoon-slove.iml
 resources/*
 src/com/test/coding/baekjoon/Main.java
 /.gradle/
+/build/
