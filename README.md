@@ -9,8 +9,10 @@
 ### 💻구성
 - Java JDK 8 ( corretto 1.8 )
 - Server IntelliJ Local Machine -> Edit Configuration -> Build and run modify options -> Redirect Input & save console to output file  
+- Gitkraken
 
 ### 👨‍💻구현방식
 - 패키지마다 알고리즘 카테고리를 나눔
 - 백준 사이트에서 제시한 입력 데이터를 input.txt에 작성 후 코딩
 - 올바른 값이 output.txt에 저장되었는지 확인
+
