@@ -31,4 +31,4 @@ bin/
 .idea
 baekjoon-slove.iml
 resources/*
-src/com/test/coding/baekjoon/string/Main.java
+src/com/test/coding/baekjoon/Main.java
