@@ -23,12 +23,9 @@ public class Solution_1008 {
 
             StringTokenizer st = new StringTokenizer(br.readLine());
 
-            double a = Double.parseDouble(st.nextToken()),
-                    b = Double.parseDouble(st.nextToken());
+            double a = Double.parseDouble(st.nextToken()), b = Double.parseDouble(st.nextToken());
 
-            //System.out.println(a / b);
             bw.write(String.valueOf(a / b));
-
         }catch (IOException ioe){
             System.err.print(ioe.getMessage());
         }
