@@ -30,7 +30,9 @@ bin/
 
 .idea
 baekjoon-slove.iml
-resources/*
-src/com/test/coding/baekjoon/Main.java
 /.gradle/
 /build/
+/src/com/test/coding/baekjoon/main/java/Main.java
+/src/main/resources/
+gradlew.bat
+gradlew
