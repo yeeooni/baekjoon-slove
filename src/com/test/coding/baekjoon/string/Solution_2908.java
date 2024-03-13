@@ -2,12 +2,21 @@ package com.test.coding.baekjoon.string;
 import java.io.*;
 import java.util.StringTokenizer;
 
+/**
+ *
+ * Solution_2908의 설명
+ * 패키지: com.test.coding.baekjoon.string
+ * 문제: 상근이의 동생 상수는 입력된 숫자를 거꾸로 읽음. 두 수가 주어졌을 때, 상수의 대답을 출력하는 프로그램
+ *      가장 큰 수를 출력해야 함
+ * 입력: 첫째 줄 A, B 두 수는 같지 않은 세 자리 수이며, 0이 포함되어 있지 않음
+ * 출력: 첫째 줄에 상수의 대답 출력
+ * 주의사항:
+ * 일시: 3/13/24
+ * 정답율: 69%
+ * 수행시간: 128ms
+**/
 public class Solution_2908 {
     public static void main(String[] args) {
-        //상수는 입력한 숫자를 뒤집어 읽는다.
-        //입력 첫째 줄에 A, B 주어짐
-        //두 수는 같지 않은 세 자리 수이며, 0이 포함되어 있지 않음
-        //두 수를 비교하여 큰 숫자를 첫째 줄에 출력함
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))){
 
