@@ -36,3 +36,4 @@ baekjoon-slove.iml
 /src/main/resources/
 gradlew.bat
 gradlew
+gradle/
