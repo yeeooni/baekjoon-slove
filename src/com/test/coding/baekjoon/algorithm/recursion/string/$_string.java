@@ -6,6 +6,8 @@ public class $_string {
         int l = length(str);
         System.out.println(l);
         printChars(str);
+        System.out.println();
+        printReversChars(str);
     }
 
     public static int length(String str){
@@ -16,8 +18,16 @@ public class $_string {
     public static void printChars(String str){
         if(str.length() == 0 || "".equals(str));
         else {
-            System.out.println(str.charAt(0));
+            System.out.print(str.charAt(0));
             printChars(str.substring(1));
+        }
+    }
+
+    public static void printReversChars(String str){
+        if("".equals(str) || str.length() == 0);
+        else {
+            printReversChars(str.substring(1));
+            System.out.print(str.charAt(0));
         }
     }
 
