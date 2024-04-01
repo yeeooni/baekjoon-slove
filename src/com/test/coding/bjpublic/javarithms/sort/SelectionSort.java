@@ -21,6 +21,7 @@ public class SelectionSort {
         }
     }
     static char[] selectionSort(char[] chars, int n){
+        // 0 ~ n-1
         for(int i = 0; i < n - 1; i++){
             int min = i;
             for(int j = i; j < n; j++){ // 0 ~ n-1
