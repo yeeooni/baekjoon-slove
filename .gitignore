@@ -32,8 +32,8 @@ bin/
 baekjoon-slove.iml
 /.gradle/
 /build/
-/src/com/test/coding/baekjoon/main/java/Main.java
 /src/main/resources/
 gradlew.bat
 gradlew
 gradle/
+/src/com/test/coding/baekjoon/java/main/Main.java

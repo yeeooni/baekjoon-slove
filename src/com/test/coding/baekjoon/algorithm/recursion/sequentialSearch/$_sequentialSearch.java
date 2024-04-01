@@ -7,14 +7,12 @@ public class $_sequentialSearch {
         System.out.println(search(arr, 39, 0, arr.length - 1));
         System.out.print(otherSearch(arr, 3, 0, arr.length - 1));
     }
-
     public static int search(int[] arr, int target, int begin, int end){
         if(begin == end) return arr[begin];
         else if(begin > end) return -1;
         else if(target == arr[begin]) return begin;
         else return search(arr, target, begin + 1, end);
     }
-
     public static int otherSearch(int[] arr, int target, int begin, int end){
         /*if(begin == end) return arr[begin];
         else */if(begin > end) return -1;
@@ -28,4 +26,5 @@ public class $_sequentialSearch {
             else return otherSearch(arr, target, mid + 1, end);
         }
     }
+
 }
