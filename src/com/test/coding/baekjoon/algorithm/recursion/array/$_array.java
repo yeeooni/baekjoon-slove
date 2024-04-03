@@ -8,6 +8,7 @@ public class $_array {
 
     public static int sum(int[] arr, int length){
         if(length == 0) return 0;
-        else return sum(arr, length - 1) + arr[length - 1];
+        else return arr[length - 1] + sum(arr, length - 1);
     }
+
 }

@@ -9,9 +9,7 @@ public class SelectionSort {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))){
 
-            //SelectionSort ss = new com.test.coding.baekjoon.main.java.SelectionSort();
             char[] chars = br.readLine().toCharArray();
-
             //HelloWorld -> HWdellloor
             //72 87 100 101 109 111 114
             bw.write(Arrays.toString(selectionSort(chars, chars.length)));
@@ -21,9 +19,9 @@ public class SelectionSort {
         }
     }
     static char[] selectionSort(char[] chars, int n){
-        // 0 ~ n-1
-        for(int i = 0; i < n - 1; i++){
-            int min = i;
+        //0 ~ n-1
+        for(int i = 0; i < n; i++){
+            int min = i;    //최소값 가정
             for(int j = i; j < n; j++){ // 0 ~ n-1
                 //기존의 값이 다음 인덱스 보다 작다면 아무일도 하지 않음, 현재 min 변수의 인덱스가 min이라는 판단.
                 if(chars[min] < chars[j]){
@@ -35,10 +33,10 @@ public class SelectionSort {
         }
         return chars;
     }
-    static void swap(char[] chars, int f, int s){
-        char temp = chars[f];
-        chars[f] = chars[s];
-        chars[s] = temp;
+    static void swap(char[] chars, int first, int second){
+        char temp = chars[first];
+        chars[first] = chars[second];
+        chars[second] = temp;
     }
 
 }
