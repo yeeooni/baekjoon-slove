@@ -17,6 +17,7 @@ import java.util.StringTokenizer;
 **/
 
 public class $_1920 {
+
     public static void main(String[] args) {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))){
@@ -67,14 +68,4 @@ public class $_1920 {
         return 0;
     }
 
-//    static int binarySearch(int[] b, int begin, int end, int target){
-//        if(begin > end) return 0;
-//        else {
-//            int mid = (begin + end) / 2;
-//            if(b[mid] == target) return 1;
-//            int result = binarySearch(b, begin, mid - 1, target);
-//            if(result != 0) return 1;
-//            else return binarySearch(b, mid + 1, end, target);
-//        }
-//    }
 }

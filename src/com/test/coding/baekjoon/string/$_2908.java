@@ -16,6 +16,7 @@ import java.util.StringTokenizer;
  * 수행시간: 128ms
 **/
 public class $_2908 {
+
     public static void main(String[] args) {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))){
@@ -47,4 +48,5 @@ public class $_2908 {
             System.err.println(ioe.getMessage());
         }
     }
+
 }

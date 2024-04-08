@@ -2,6 +2,7 @@ package com.test.coding.baekjoon.algorithm.recursion.binarySearch;
 
 //재귀함수를 이용한 이진탐색 알고리즘
 public class $_binarySearch {
+
     public static void main(String[] args) {
         String[] strings = {"A", "B", "C", "D"};
         System.out.println(search(strings, "D", 1, strings.length - 1));
@@ -17,4 +18,5 @@ public class $_binarySearch {
             else return search(strings, target, mid + 1, end);
         }
     }
+
 }

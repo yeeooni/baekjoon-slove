@@ -15,6 +15,7 @@ import java.io.*;
  * 수행시간: 124ms
 **/
 public class $_10809 {
+
     public static void main(String[] args) {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))){
@@ -31,4 +32,5 @@ public class $_10809 {
             System.err.print(ioe.getMessage());
         }
     }
+
 }

@@ -17,6 +17,7 @@ import java.util.StringTokenizer;
 **/
 
 public class $_1008 {
+
     public static void main(String[] args) {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))){
@@ -29,4 +30,5 @@ public class $_1008 {
             System.err.print(ioe.getMessage());
         }
     }
+
 }

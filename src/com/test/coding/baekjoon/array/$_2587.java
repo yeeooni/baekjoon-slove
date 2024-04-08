@@ -15,6 +15,7 @@ import java.io.*;
  * 수행시간: 132ms
 **/
 public class $_2587 {
+
     public static void main(String[] args) {
         //첫 줄엔 평균, 둘째 줄엔 중앙 값
         try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -71,10 +72,14 @@ public class $_2587 {
                 }
                 min = j;
             }
-            int temp = arr[i];
-            arr[i] = arr[min];
-            arr[min] = temp;
+           swap(arr, i, min);
         }
         return arr;
+    }
+
+    static void swap(int arr[], int first, int second){
+        int tmp = arr[first];
+        arr[first] = arr[second];
+        arr[second] = tmp;
     }
 }

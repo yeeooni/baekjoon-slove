@@ -16,6 +16,7 @@ import java.io.*;
 **/
 
 public class $_5622 {
+
     public static void main(String[] args) {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))){
@@ -55,4 +56,5 @@ public class $_5622 {
             System.err.print(ioe.getMessage());
         }
     }
+
 }

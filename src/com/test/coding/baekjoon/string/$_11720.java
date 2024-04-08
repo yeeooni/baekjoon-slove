@@ -14,6 +14,7 @@ import java.io.*;
  * 수행시간: 128ms
 **/
 public class $_11720 {
+
     public static void main(String[] args) {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))){

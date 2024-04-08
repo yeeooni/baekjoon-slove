@@ -59,7 +59,6 @@ public class $_25305 {
                 if(arr[min] < arr[j]) {
                     //내림차순
                     min = j;
-
                     //오름차순일 경우 continue;
                 }
                 //오름차순일 경우 이곳에

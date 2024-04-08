@@ -17,6 +17,7 @@ import java.util.Stack;
 **/
 
 public class $_9012 {
+
     public static void main(String[] args) {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out))){
@@ -48,5 +49,6 @@ public class $_9012 {
             ioe.getStackTrace();
         }
     }
+
 }
 
