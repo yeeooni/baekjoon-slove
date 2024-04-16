@@ -15,11 +15,11 @@ public class MergeSort {
             int mid = (begin+end) / 2;
             mergeSort(arr, begin, mid);
             mergeSort(arr, mid + 1, end);
-            merge(arr, begin, mid, end);
+            mergeSort(arr, begin, mid, end);
         }
     }
 
-    static void merge(int[] arr, int begin, int middle, int end){
+    static void mergeSort(int[] arr, int begin, int middle, int end){
         int i = begin, j = middle + 1, k = begin;
         int[] temp = new int[arr.length];
 
