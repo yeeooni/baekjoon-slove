@@ -1,6 +1,6 @@
 <div align="center">
 
-## 백준 알고리즘
+# 백준 알고리즘
 ![last-commit badge](https://img.shields.io/github/last-commit/yeeooni/baekjoon-slove?style=flat-square)
 
 </div>
