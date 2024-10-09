@@ -12,42 +12,42 @@ jobs:
 
     steps:
       - name: checkout repository
-        users: actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: POST algorithm repository daily alert to SLACK
         run: |
-            bash shell-scripts/statistics-algorithm-java-files.sh
+          bash shell-scripts/statistics-algorithm-java-files.sh
 
       - name: Send SLACK Notification
         run: |
-            # Counting
-            DAILY_COUNT="${{ steps.java_stats.outputs.DAILY_JAVA_COUNT }}"
-            WEEKLY_COUNT="${{ steps.java_stats.outputs.WEEKLY_JAVA_COUNT }}"
-            MONTHLY_COUNT="${{ steps.java_stats.outputs.MONTHLY_JAVA_COUNT }}"
-            
-            # Slack Message Send & Statistics
-            if [ $DAILY_COUNT -lt 1 ]
-            then 
-                MSG="더 분발해야 할 것 같아요!"
-            elif [ $DAILY_COUNT -ge 2 -a $DAILY_COUNT -lt 3 ]
-                MSG="지금까지 잘하고 계시네요. 화이팅입니다!😁"
-            then
-                MSG="목표를 거의 달성하셨어요! 대단합니다."
-            else
-                MSG="3 문제 이상 푸셔서, 너무너무 존경스럽습니다.🥹"
-            fi
+          # Counting
+          DAILY_COUNT="${{ steps.java_stats.outputs.DAILY_JAVA_COUNT }}"
+          WEEKLY_COUNT="${{ steps.java_stats.outputs.WEEKLY_JAVA_COUNT }}"
+          MONTHLY_COUNT="${{ steps.java_stats.outputs.MONTHLY_JAVA_COUNT }}"
           
-            echo "------DATE------"
-            NOW_YEAR=$(date +%Y)  
-            NOW_MONTH=$(date +%0m)
-            NOW_DATE=$(date +%Y.%m.%d)
-            echo "------DATE------"
+          # Slack Message Send & Statistics
+          if [ $DAILY_COUNT -lt 1 ]
+          then 
+            MSG="더 분발해야 할 것 같아요!"
+          elif [ $DAILY_COUNT -ge 2 -a $DAILY_COUNT -lt 3 ]
+            MSG="지금까지 잘하고 계시네요. 화이팅입니다!😁"
+          then
+            MSG="목표를 거의 달성하셨어요! 대단합니다."
+          else
+            MSG="3 문제 이상 푸셔서, 너무너무 존경스럽습니다.🥹"
+          fi
           
-            # algorithm State Alert
-            DAILY_MSG="알고리즘 풀기 좋은 밤이죠?\n오늘날짜($NOW_DATE) 기준으로 *${NOW_YEAR}년 ${NOW_MONTH}월 ${DAILY_COUNT}개 달성하셨어요!\n통계를 말씀드리자면, 주간 ${WEEKLY_COUNT}개, 월간 ${MONTHLY_COUNT}개 입니다!\n${MSG}
+          echo "------DATE------"
+          NOW_YEAR=$(date +%Y)  
+          NOW_MONTH=$(date +%0m)
+          NOW_DATE=$(date +%Y.%m.%d)
+          echo "------DATE------"
           
-            # SLACK channel to SEND
-            curl -X POST --data-urlencode "payload={\"channel\": \"코딩테스트-알고리즘\", \"username\": \"코딩테스트-알고리즘-알리미\", \"text\": \"${DAILY_MSG}\", \"icon_emoji\": \":male-technologist:\"}"{% raw %}${{ secrets.SLACK_WEBHOOK_URL }}{% endraw %}
+          # algorithm State Alert
+          DAILY_MSG="알고리즘 풀기 좋은 밤이죠?\n오늘날짜($NOW_DATE) 기준으로 *${NOW_YEAR}년 ${NOW_MONTH}월 ${DAILY_COUNT}개 달성하셨어요!\n통계를 말씀드리자면, 주간 ${WEEKLY_COUNT}개, 월간 ${MONTHLY_COUNT}개 입니다!\n${MSG}
+          
+          # SLACK channel to SEND
+          curl -X POST --data-urlencode "payload={\"channel\": \"코딩테스트-알고리즘\", \"username\": \"코딩테스트-알고리즘-알리미\", \"text\": \"${DAILY_MSG}\", \"icon_emoji\": \":male-technologist:\"}"{% raw %}${{ secrets.SLACK_WEBHOOK_URL }}{% endraw %}
           
             
   
