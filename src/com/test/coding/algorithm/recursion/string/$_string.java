@@ -1,4 +1,4 @@
-package com.test.coding.baekjoon.algorithm.recursion.string;
+package com.test.coding.algorithm.recursion.string;
 
 public class $_string {
 

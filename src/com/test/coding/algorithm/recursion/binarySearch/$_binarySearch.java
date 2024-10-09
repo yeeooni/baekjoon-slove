@@ -1,4 +1,4 @@
-package com.test.coding.baekjoon.algorithm.recursion.binarySearch;
+package com.test.coding.algorithm.recursion.binarySearch;
 
 //재귀함수를 이용한 이진탐색 알고리즘
 public class $_binarySearch {

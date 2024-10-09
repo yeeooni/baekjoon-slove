@@ -1,4 +1,4 @@
-package com.test.coding.baekjoon.algorithm.recursion.sequentialSearch;
+package com.test.coding.algorithm.recursion.sequentialSearch;
 
 //재귀함수를 이용한 순차검색 알고리즘
 public class $_sequentialSearch {

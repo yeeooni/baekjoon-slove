@@ -1,4 +1,4 @@
-package com.test.coding.baekjoon.algorithm.recursion.array;
+package com.test.coding.algorithm.recursion.array;
 
 public class $_array {
 
