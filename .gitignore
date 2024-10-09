@@ -32,5 +32,5 @@ bin/
 /build/
 baekjoon-slove.iml
 /src/main/resources/
-/src/com/test/coding/baekjoon/java/main/Main.java
 package-lock.json
+/src/com/test/coding/main/Main.java
