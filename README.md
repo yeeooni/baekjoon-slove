@@ -13,7 +13,7 @@
 - Java JDK 8 ( corretto 1.8 )
 - Server IntelliJ Local Machine -> Edit Configuration -> Build and run modify options -> Redirect Input & save console to output file  
 - Gitkraken
-- Gradle
+- ~~Gradle~~
 - ~~SpringBoot2.x.x~~
 - ~~Swagger UI~~
 
@@ -25,3 +25,4 @@
 ### 📋추가예정
 - [ ] ~~AWS EC2 인스턴스를 이용하여 Docker-compose 설치~~
 - [ ] ~~Docker 컨테이너를 이용하고 App을 외부에서 접근이 가능하도록 구현~~
+- [ ] 알고리즘 풀이 주간, 월간 통계・결산하여 알림 서비스
