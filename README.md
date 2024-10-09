@@ -1,5 +1,7 @@
 # 백준 알고리즘
 
+![last-commit badge](https://img.shields.io/github/last-commit/yeeooni/baekjoon-slove?style=flat-square)
+
 ### ✏️작성 취지
 - 알고리즘 해결과정 및 고충 정리
 - 파일 이력관리 
