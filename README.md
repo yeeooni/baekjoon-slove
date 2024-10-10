@@ -19,7 +19,7 @@
 - ~~Gradle~~
 - ~~SpringBoot2.x.x~~
 - ~~Swagger UI~~
-- slack & Incoming WebHooks
+- Slack & Incoming WebHooks API
 
 ### 🗂️폴더 구조
 - **baekjoon**: 백준 알고리즘(root)
