@@ -1,4 +1,4 @@
-package com.test.coding.algorithm.recursion;
+package com.test.coding.baekjoon.recursion;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
