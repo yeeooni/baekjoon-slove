@@ -2,8 +2,8 @@ name: daily-algorithm-alert
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Run daily at 9 AM
-    - cron: '0 0 * * 1'  # Run weekly on Mondays at 9 AM
+    - cron: '0 0 * * *'   # Run daily at 9 AM
+    - cron: '0 0 * * 1'   # Run weekly on Mondays at 9 AM
     - cron: '0 11 1 * *'  # Run monthly on the 1st at 8 PM
 
 jobs:
@@ -47,7 +47,7 @@ jobs:
           echo -e "\e[31m------DATE------"
           
           # algorithm State Alert
-          DAILY_MSG="알고리즘 풀기 좋은 밤이죠?\n오늘 날짜(${NOW_DATE})기준으로 *${NOW_YEAR}년 ${NOW_MONTH}월 ${DAILY_COUNT}개 달성하셨어요!\n통계를 말씀드리자면, 주간 ${WEEKLY_COUNT}개, 월간 ${MONTHLY_COUNT}개 입니다!\n${MSG}
+          DAILY_MSG="알고리즘 풀기 좋은 밤이죠?\n오늘 날짜(${NOW_DATE})기준으로 ${NOW_YEAR}년 ${NOW_MONTH}월 ${DAILY_COUNT}개 달성하셨어요!\n통계를 말씀드리자면, 주간 ${WEEKLY_COUNT}개, 월간 ${MONTHLY_COUNT}개 입니다!\n${MSG}"
           
           # SLACK channel to SEND
           curl -X POST --data-urlencode "payload={\"channel\": \"코딩테스트-알고리즘\", \"username\": \"코테알-리미\", \"text\": \"${DAILY_MSG}\", \"icon_emoji\": \":male-technologist:\"}"{% raw %}${{ secrets.SLACK_WEBHOOKS_URL }}{% endraw %}
