@@ -7,11 +7,11 @@ on:
     - cron: '0 11 1 * *'  # Run monthly on the 1st at 8 PM
 
 jobs:
-  bulid:
+  alert-build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: print current time in workflow
+      - name: Print Current time in workflow
         run: date
 
       - name: checkout repository
@@ -27,32 +27,39 @@ jobs:
           DAILY_COUNT="${{ steps.run-output-script.outputs.DAILY_JAVA_COUNT }}"
           WEEKLY_COUNT="${{ steps.run-output-script.outputs.WEEKLY_JAVA_COUNT }}"
           MONTHLY_COUNT="${{ steps.run-output-script.outputs.MONTHLY_JAVA_COUNT }}"
+          CURRENT_DIR="${{ step.run-output-script.outputs.CUREENT_DIR}}
+          
+          echo "===================Slack Message Send & staticstics===================" 
+          echo ${CURRENT_DIR}
           
           # Slack Message Send & Statistics
           if [ ${DAILY_COUNT} -lt 1 ]
           then 
-            MSG="더 분발해야 할 것 같아요!"
+            MSG="더 분발해야 할 것 같아요!\n"
           elif [ ${DAILY_COUNT} -ge 2 -a ${DAILY_COUNT} -lt 3 ]
-            MSG="지금까지 잘하고 계시네요. 화이팅입니다!😁"
+            MSG="지금까지 잘하고 계시네요. 화이팅입니다!"
           then
             MSG="목표를 거의 달성하셨어요! 대단합니다."
           else
-            MSG="3 문제 이상 푸셔서, 너무너무 존경스럽습니다.🥹"
+            MSG="3 문제 이상 푸셔서, 너무너무 존경스럽습니다."
           fi
+          echo "===================Slack Message Send & staticstics==================="
           
-          echo -e "\e[31m------DATE------"
+          
+          echo -e "\e[31m===================DATE==================="
           NOW_YEAR=$(date +%Y)  
           NOW_MONTH=$(date +%0m)
           NOW_DATE=$(date +%Y.%m.%d)
-          echo -e "\e[31m------DATE------"
+          echo ${NOW_YEAR}-${NOW_MONTH}-${NOW_DATE}
+          echo -e "\e[31m===================DATE==================="
           
           # algorithm State Alert
-          DAILY_MSG="알고리즘 풀기 좋은 밤이죠?\n오늘 날짜(${NOW_DATE})기준으로 ${NOW_YEAR}년 ${NOW_MONTH}월 ${DAILY_COUNT}개 달성하셨어요!\n통계를 말씀드리자면, 주간 ${WEEKLY_COUNT}개, 월간 ${MONTHLY_COUNT}개 입니다!\n${MSG}"
+          DAILY_MSG="알고리즘 풀기 좋은 밤이죠?\n오늘 날짜(${NOW_DATE})기준으로 ${NOW_YEAR}년 ${NOW_MONTH}월 ${DAILY_COUNT}개 달성하셨어요!\n통계를 말씀드리자면, 주간 ${WEEKLY_COUNT}개, 월간 ${MONTHLY_COUNT}개 입니다!\n${MSG}\n 자세히 알아보려면 <https://github.com/yeeooni/baekjoon-slove|여기를 클릭>하세요."
           
           # SLACK channel to SEND
-          curl -X POST --data-urlencode "payload={\"channel\": \"코딩테스트-알고리즘\", \"username\": \"코테알-리미\", \"text\": \"${DAILY_MSG}\", \"icon_emoji\": \":male-technologist:\"}"{% raw %}${{ secrets.SLACK_WEBHOOKS_URL }}{% endraw %}
+          curl -X POST --data-urlencode "payload={\"text\": \"${DAILY_MSG}\", \"icon_emoji\": \":male-technologist:\"}" ${{ secrets.SLACK_WEBHOOKS_URL }}
           
             
-  
-
-
+          
+          
+          
