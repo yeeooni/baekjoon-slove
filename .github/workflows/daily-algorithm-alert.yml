@@ -27,7 +27,7 @@ jobs:
           DAILY_COUNT="${{ steps.run-output-script.outputs.DAILY_JAVA_COUNT }}"
           WEEKLY_COUNT="${{ steps.run-output-script.outputs.WEEKLY_JAVA_COUNT }}"
           MONTHLY_COUNT="${{ steps.run-output-script.outputs.MONTHLY_JAVA_COUNT }}"
-          CURRENT_DIR="${{ step.run-output-script.outputs.CUREENT_DIR}}
+          CURRENT_DIR="${{ steps.run-output-script.outputs.CUREENT_DIR}}
           
           echo "===================Slack Message Send & staticstics===================" 
           echo ${CURRENT_DIR}
