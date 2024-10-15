@@ -54,11 +54,11 @@ jobs:
           echo -e "\e[31m+====================================================+";
   
           # Slack Message Send & Statistics
-          if [ ${DAILY_COUNT} -lt 1 ] then 
-            MSG="더 분발해야 할 것 같아요!\n"
-          elif [ ${DAILY_COUNT} -ge 2 -a ${DAILY_COUNT} -lt 3 ] then
+          if [ ${DAILY_COUNT} -lt 1 ]; then 
+            MSG="더 분발해야 할 것 같아요!"
+          elif [ ${DAILY_COUNT} -ge 2 -a ${DAILY_COUNT} -lt 3 ]; then
             MSG="지금까지 잘하고 계시네요. 화이팅입니다!"
-          elif [ ${DAILY_COUNT} -ge 3 -a ${DAILY_COUNT} -lt 4 ] then
+          elif [ ${DAILY_COUNT} -ge 3 -a ${DAILY_COUNT} -lt 4 ]; then
             MSG="목표를 거의 달성하셨어요! 대단합니다."
           else
             MSG="4 문제 이상 푸셔서, 존경스럽습니다."
