@@ -3,8 +3,8 @@ name: daily-algorithm-alert
 on:
   schedule:
     - cron: '0 11 * * *'   # Run daily at 8 PM
-    - cron: '0 11 * * 1'   # Run weekly on Mondays at 8 PM
-    - cron: '0 11 1 * *'  # Run monthly on the 1st at 8 PM
+    # - cron: '0 11 * * 1'   # Run weekly on Mondays at 8 PM
+    # - cron: '0 11 1 * *'  # Run monthly on the 1st at 8 PM
 
 jobs:
   alert-build:
@@ -21,11 +21,6 @@ jobs:
       #  id: run-output-script
       #  run: bash shell-scripts/statistics-algorithm-java-files.sh
 
-      - name: Run Shell Script to Count Java Files
-        run: |
-          chmod +x ./shell-scripts/cal-months-algorithm-slove.sh  # 스크립트에 실행 권한 부여
-          bash shell-scripts/cal-months-algorithm-slove.sh 6   # 과거 6개월 전부터 현재까지 파일 개수 계산
-
       - name: Send slack Notification
         run: |
           # Counting
@@ -37,17 +32,15 @@ jobs:
           YESTERDAY=$(date -d "yesterday" +%Y-%m-%d)          # 어제 날짜
           SEVEN_DAYS_AGO=$(date -d "7 days ago" +%Y-%m-%d)    # 일주일 전 날짜
           THIRTY_DAYS_AGO=$(date -d "30 days ago" +%Y-%m-%d)  # 한 달 전 날짜
-          NOW_YEAR=$(date +%Y)  
-          NOW_MONTH=$(date +%0m)
-          NOW_DATE=$(date +%d)
+          NOW_YEAR=$(date +%Y)                                # 이번년도
+          NOW_MONTH=$(date +%0m)                              # 이번달
+          NOW_DATE=$(date +%d)                                # 이번일
           echo ${NOW_YEAR}-${NOW_MONTH}-${NOW_DATE}
           echo -e "\e[31m===================DATE==================="
           
           DAILY_COUNT=$(find src -type f -name "*.java" -newermt "${YESTERDAY}" ! -newermt "${TODAY}" | wc -l)
           WEEKLY_COUNT=$(find src -type f -name "*.java" -newermt "${SEVEN_DAYS_AGO}" ! -newermt "${TODAY}" | wc -l)
           MONTHLY_COUNT=$(find src -type f -name "*.java" -newermt "${THIRTY_DAYS_AGO}" ! -newermt "${TODAY}" | wc -l)
-          
-          TARGET_FILE_PATH='src'
           
           echo -e "\e[31m+=========================================+";
           echo -e "\e[32mJava Files Created Yesterday: ${DAILY_COUNT}"
@@ -57,24 +50,21 @@ jobs:
   
           # Slack Message Send & Statistics
           if [ ${DAILY_COUNT} -lt 1 ]; then 
-            MSG="더 분발해야 할 것 같아요!"
+            MSG="더 분발해야 할 것 같아요!😂"
           elif [ ${DAILY_COUNT} -ge 2 -a ${DAILY_COUNT} -lt 3 ]; then
-            MSG="지금까지 잘하고 계시네요. 화이팅입니다!"
+            MSG="지금까지 잘하고 계시네요. 화이팅입니다!😘"
           elif [ ${DAILY_COUNT} -ge 3 -a ${DAILY_COUNT} -lt 4 ]; then
-            MSG="목표를 거의 달성하셨어요! 대단합니다."
+            MSG="목표를 거의 달성하셨어요! 대단합니다.👏🏽"
           else
-            MSG="4 문제 이상 푸셔서, 존경스럽습니다."
+            MSG="4 문제 이상 푸셔서, 존경스럽습니다.🎉"
           fi
           echo "====slack Message Send & staticstics===============" 
           
           # algorithm State Alert
-          COUNT_MSG="\n#--------------------------------#\n"
-          
-          DAILY_MSG="알고리즘 풀기에 딱 좋은 밤이네요!\n*오늘 날짜_(${TODAY})_기준으로, 벌써 *${NOW_YEAR}년 ${NOW_MONTH}월에 ${DAILY_COUNT}문제를 해결하셨어요!*\n통계를 보면, 이번 주에는 ${WEEKLY_COUNT}문제, 이번 달에는 ${MONTHLY_COUNT}문제를 푸셨습니다! ${MSG}\n자세한 내용을 보시려면 <https://github.com/yeeooni/baekjoon-slove|여기>를 클릭하세요."
-          COUNT_MSG+="${NOW_YEAR}년 ${{ env.MONTHS_AGO }}개월 전부터 현재까지 해결한 문제\n*총 ${{ env.JAVA_FILE_COUNT }}문제*\n*훌륭합니다!* 꾸준한 노력이 드디어 결실을 보고 있어요. 다음 달도 화이팅! 🎉🚀"
+          DAILY_MSG="알고리즘 풀기에 딱 좋은 밤이네요!\n*오늘 날짜_(${TODAY})_기준으로, 벌써 *${NOW_YEAR}년 ${NOW_MONTH}월에 ${DAILY_COUNT}문제를 해결하셨어요!💪*\n📊통계를 보면, 이번 주에는 ${WEEKLY_COUNT}문제, 이번 달에는 ${MONTHLY_COUNT}문제를 푸셨습니다! ${MSG}\n자세한 내용을 보시려면 🔗<https://github.com/yeeooni/baekjoon-slove|여기>를 클릭하세요."
           
           # SLACK channel to SEND
-          curl -X POST --data-urlencode "payload={\"text\": \"${DAILY_MSG}${COUNT_MSG}\"}" ${{ secrets.SLACK_WEBHOOKS_URL }}
+          curl -X POST --data-urlencode "payload={\"text\": \"${DAILY_MSG}\"}" ${{ secrets.SLACK_WEBHOOKS_URL }}
           
             
           

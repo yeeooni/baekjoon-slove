@@ -1,0 +1,29 @@
+name: weekly-algorithm-alert
+
+on:
+  schedule:
+    - cron: '0 9 * * 5'   # Run weekly on Fridays at 8 PM
+
+jobs:
+  alert-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Shell Script to Count Java Files
+        run: |
+            chmod +x ./shell-scripts/cal-months-algorithm-slove.sh  # 스크립트에 실행 권한 부여
+            bash shell-scripts/cal-months-algorithm-slove.sh 6   # 과거 6개월 전부터 현재까지 파일 개수 계산
+
+
+      - name: Send slack Notification
+        run: |
+          
+          # algorithm State Alert
+          COUNT_MSG="\n#--------------------------------#\n"
+          COUNT_MSG+="${NOW_YEAR}년 ${{ env.MONTHS_AGO }}개월 전부터 현재까지 해결한 문제\n*총 ${{ env.JAVA_FILE_COUNT }}문제*\n*훌륭합니다!* 꾸준한 노력이 드디어 결실을 보고 있어요. 다음 달도 화이팅! 🎉🚀"
+          
+          # SLACK channel to SEND
+          curl -X POST --data-urlencode "payload={\"text\": \"${COUNT_MSG}\"}" ${{ secrets.SLACK_WEBHOOKS_URL }}
