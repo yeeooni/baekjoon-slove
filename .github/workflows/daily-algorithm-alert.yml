@@ -21,16 +21,15 @@ jobs:
       #  id: run-output-script
       #  run: bash shell-scripts/statistics-algorithm-java-files.sh
 
+      - name: Run Shell Script to Count Java Files
+        run: |
+          chmod +x ./shell-scripts/cal-months-algorithm-slove.sh  # 스크립트에 실행 권한 부여
+          bash shell-scripts/cal-months-algorithm-slove.sh 6   # 과거 6개월 전부터 현재까지 파일 개수 계산
+
       - name: Send slack Notification
         run: |
           # Counting
-          # DAILY_COUNT="${{ steps.run-output-script.outputs.DAILY_JAVA_COUNT }}"
-          # WEEKLY_COUNT="${{ steps.run-output-script.outputs.WEEKLY_JAVA_COUNT }}"
-          # MONTHLY_COUNT="${{ steps.run-output-script.outputs.MONTHLY_JAVA_COUNT }}"
-          # CURRENT_DIR="${{ steps.run-output-script.outputs.CUREENT_DIR}}
-          # echo ${CURRENT_DIR}
-          
-          echo "===================slack Message Send & staticstics===================" 
+          echo "====slack Message Send & staticstics===============" 
           
           # 현재 날짜 및 계산을 위한 기본 변수 설정
           echo -e "\e[31m===================DATE==================="
@@ -40,18 +39,21 @@ jobs:
           THIRTY_DAYS_AGO=$(date -d "30 days ago" +%Y-%m-%d)  # 한 달 전 날짜
           NOW_YEAR=$(date +%Y)  
           NOW_MONTH=$(date +%0m)
+          NOW_DATE=$(date +%d)
           echo ${NOW_YEAR}-${NOW_MONTH}-${NOW_DATE}
           echo -e "\e[31m===================DATE==================="
           
-          DAILY_COUNT=$(find . -type f -name "*.java" -newermt "${YESTERDAY}" ! -newermt "${TODAY}" | wc -l)
-          WEEKLY_COUNT=$(find . -type f -name "*.java" -newermt "${SEVEN_DAYS_AGO}" ! -newermt "${TODAY}" | wc -l)
-          MONTHLY_COUNT=$(find . -type f -name "*.java" -newermt "${THIRTY_DAYS_AGO}" ! -newermt "${TODAY}" | wc -l)
+          DAILY_COUNT=$(find src -type f -name "*.java" -newermt "${YESTERDAY}" ! -newermt "${TODAY}" | wc -l)
+          WEEKLY_COUNT=$(find src -type f -name "*.java" -newermt "${SEVEN_DAYS_AGO}" ! -newermt "${TODAY}" | wc -l)
+          MONTHLY_COUNT=$(find src -type f -name "*.java" -newermt "${THIRTY_DAYS_AGO}" ! -newermt "${TODAY}" | wc -l)
           
-          echo -e "\e[31m+====================================================+";
+          TARGET_FILE_PATH='src'
+          
+          echo -e "\e[31m+=========================================+";
           echo -e "\e[32mJava Files Created Yesterday: ${DAILY_COUNT}"
           echo -e "\e[32mJava Files Created Last 7 Days: ${WEEKLY_COUNT}"
           echo -e "\e[32mJava Files Created Last 30 Days: ${MONTHLY_COUNT}"
-          echo -e "\e[31m+====================================================+";
+          echo -e "\e[31m+=========================================+";
   
           # Slack Message Send & Statistics
           if [ ${DAILY_COUNT} -lt 1 ]; then 
@@ -63,13 +65,16 @@ jobs:
           else
             MSG="4 문제 이상 푸셔서, 존경스럽습니다."
           fi
-          echo "===================slack Message Send & staticstics==================="
+          echo "====slack Message Send & staticstics===============" 
           
           # algorithm State Alert
-          DAILY_MSG="알고리즘 풀기 좋은 밤이죠?\n오늘 날짜(${TODAY})기준으로 ${NOW_YEAR}년 ${NOW_MONTH}월 ${DAILY_COUNT}개 달성하셨어요!\n통계를 말씀드리자면, 주간 ${WEEKLY_COUNT}개, 월간 ${MONTHLY_COUNT}개 입니다!\n${MSG}\n 자세히 알아보려면 <https://github.com/yeeooni/baekjoon-slove|여기를 클릭>하세요."
+          COUNT_MSG="\n#--------------------------------#\n"
+          
+          DAILY_MSG="알고리즘 풀기에 딱 좋은 밤이네요!\n*오늘 날짜_(${TODAY})_기준으로, 벌써 *${NOW_YEAR}년 ${NOW_MONTH}월에 ${DAILY_COUNT}문제를 해결하셨어요!*\n통계를 보면, 이번 주에는 ${WEEKLY_COUNT}문제, 이번 달에는 ${MONTHLY_COUNT}문제를 푸셨습니다! ${MSG}\n자세한 내용을 보시려면 <https://github.com/yeeooni/baekjoon-slove|여기>를 클릭하세요."
+          COUNT_MSG+="${NOW_YEAR}년 ${{ env.MONTHS_AGO }}개월 전부터 현재까지 해결한 문제\n*총 ${{ env.JAVA_FILE_COUNT }}문제*\n*훌륭합니다!* 꾸준한 노력이 드디어 결실을 보고 있어요. 다음 달도 화이팅! 🎉🚀"
           
           # SLACK channel to SEND
-          curl -X POST --data-urlencode "payload={\"text\": \"${DAILY_MSG}\", \"icon_emoji\": \":male-technologist:\"}" ${{ secrets.SLACK_WEBHOOKS_URL }}
+          curl -X POST --data-urlencode "payload={\"text\": \"${DAILY_MSG}${COUNT_MSG}\"}" ${{ secrets.SLACK_WEBHOOKS_URL }}
           
             
           
