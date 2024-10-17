@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: Set Timezone to Asia/Seoul
+        run: sudo timedatectl set-timezone Asia/Seoul
+
       - name: Print Current time in workflow
         run: date
 
@@ -21,46 +25,58 @@ jobs:
       #  id: run-output-script
       #  run: bash shell-scripts/statistics-algorithm-java-files.sh
 
-      - name: Send slack Notification
+      - name: Check Java Files created or modified in various periods using git log
         run: |
-          # Counting
-          echo "====slack Message Send & staticstics===============" 
+          TODAY=$(date +%Y-%m-%d)
+          PERIODS=("yesterday" "7 days ago" "30 days ago")
+          LABELS=("Yesterday" "Last 7 Days" "Last 30 Days")
+          COUNTS=()
+
+          for i in ${!PERIODS[@]}; do
+          START_DATE=$(date -d "${PERIODS[$i]}" +%Y-%m-%d)
+          echo "Checking Java files created or modified between ${START_DATE} and ${TODAY}:"
+          CHANGED_FILES=$(git log --since="${START_DATE}" --until="${TODAY}" --name-only --pretty="" -- "*.java" | sort | uniq)
+          COUNT=$(echo "$CHANGED_FILES" | wc -l)
+          COUNTS+=($COUNT)
+          echo "${LABELS[$i]} Count: $COUNT"
+          done
+
+          DAILY_COUNT=${COUNTS[0]}
+          WEEKLY_COUNT=${COUNTS[1]}
+          MONTHLY_COUNT=${COUNTS[2]}
           
-          # 현재 날짜 및 계산을 위한 기본 변수 설정
-          echo -e "\e[31m===================DATE==================="
-          TODAY=$(date +%Y-%m-%d)                             # 오늘 날짜 (YYYY-MM-DD 형식)
-          YESTERDAY=$(date -d "yesterday" +%Y-%m-%d)          # 어제 날짜
-          SEVEN_DAYS_AGO=$(date -d "7 days ago" +%Y-%m-%d)    # 일주일 전 날짜
-          THIRTY_DAYS_AGO=$(date -d "30 days ago" +%Y-%m-%d)  # 한 달 전 날짜
-          NOW_YEAR=$(date +%Y)                                # 이번년도
-          NOW_MONTH=$(date +%0m)                              # 이번달
-          NOW_DATE=$(date +%d)                                # 이번일
-          echo ${NOW_YEAR}-${NOW_MONTH}-${NOW_DATE}
-          echo -e "\e[31m===================DATE==================="
-          
-          DAILY_COUNT=$(find src -type f -name "*.java" -newermt "${YESTERDAY}" ! -newermt "${TODAY}" | wc -l)
-          WEEKLY_COUNT=$(find src -type f -name "*.java" -newermt "${SEVEN_DAYS_AGO}" ! -newermt "${TODAY}" | wc -l)
-          MONTHLY_COUNT=$(find src -type f -name "*.java" -newermt "${THIRTY_DAYS_AGO}" ! -newermt "${TODAY}" | wc -l)
-          
-          echo -e "\e[31m+=========================================+";
+          echo -e "\e[31m+==================COUNT===================+";
           echo -e "\e[32mJava Files Created Yesterday: ${DAILY_COUNT}"
           echo -e "\e[32mJava Files Created Last 7 Days: ${WEEKLY_COUNT}"
           echo -e "\e[32mJava Files Created Last 30 Days: ${MONTHLY_COUNT}"
-          echo -e "\e[31m+=========================================+";
+          echo -e "\e[31m+==================COUNT===================+";
   
-          # Slack Message Send & Statistics
-          if [ ${DAILY_COUNT} -lt 1 ]; then 
-            MSG="더 분발해야 할 것 같아요!😂"
-          elif [ ${DAILY_COUNT} -ge 2 -a ${DAILY_COUNT} -lt 3 ]; then
-            MSG="지금까지 잘하고 계시네요. 화이팅입니다!😘"
-          elif [ ${DAILY_COUNT} -ge 3 -a ${DAILY_COUNT} -lt 4 ]; then
-            MSG="목표를 거의 달성하셨어요! 대단합니다.👏🏽"
-          else
-            MSG="4 문제 이상 푸셔서, 존경스럽습니다.🎉"
-          fi
-          echo "====slack Message Send & staticstics===============" 
+          # if [ ${DAILY_COUNT} -lt 1 ]; then 
+          #  MSG="더 분발해야 할 것 같아요!😂"
+          # elif [ ${DAILY_COUNT} -ge 2 -a ${DAILY_COUNT} -lt 3 ]; then
+          #  MSG="지금까지 잘하고 계시네요. 화이팅입니다!😘"
+          # elif [ ${DAILY_COUNT} -ge 3 -a ${DAILY_COUNT} -lt 4 ]; then
+          #  MSG="목표를 거의 달성하셨어요! 대단합니다.👏🏽"
+          # else
+          #  MSG="4 문제 이상 푸셔서, 존경스럽습니다.🎉"
+          # fi
           
-          # algorithm State Alert
+          # Slack Message Send & Statistics
+          case ${DAILY_COUNT} in
+            0)
+              MSG="더 분발해야 할 것 같아요!😂"
+              ;;
+            2 | 3)
+              MSG="지금까지 잘하고 계시네요. 화이팅입니다!😘"
+              ;;
+            4)
+              MSG="목표를 거의 달성하셨어요! 대단합니다.👏🏽"
+              ;;
+            *)
+              MSG="4 문제 이상 푸셔서, 존경스럽습니다.🎉"
+              ;;
+          esac
+          
           DAILY_MSG="알고리즘 풀기에 딱 좋은 밤이네요!\n*오늘 날짜_(${TODAY})_기준으로, 벌써 *${NOW_YEAR}년 ${NOW_MONTH}월에 ${DAILY_COUNT}문제를 해결하셨어요!💪*\n📊통계를 보면, 이번 주에는 ${WEEKLY_COUNT}문제, 이번 달에는 ${MONTHLY_COUNT}문제를 푸셨습니다! ${MSG}\n자세한 내용을 보시려면 🔗<https://github.com/yeeooni/baekjoon-slove|여기>를 클릭하세요."
           
           # SLACK channel to SEND
