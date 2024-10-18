@@ -21,35 +21,13 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v4
 
-      #- name: POST algorithm repository daily alert to SLACK
-      #  id: run-output-script
-      #  run: bash shell-scripts/statistics-algorithm-java-files.sh
-
-      - name: Check Java Files created or modified in various periods using git log
+      - name: POST algorithm repository daily alert to SLACK
         run: |
-          TODAY=$(date +%Y-%m-%d)
-          PERIODS=("yesterday" "7 days ago" "30 days ago")
-          LABELS=("Yesterday" "Last 7 Days" "Last 30 Days")
-          COUNTS=()
+          chmod +x ./shell-scripts/statistics-algorithm-java-files.sh
+          bash shell-scripts/statistics-algorithm-java-files.sh
 
-          for i in ${!PERIODS[@]}; do
-          START_DATE=$(date -d "${PERIODS[$i]}" +%Y-%m-%d)
-          echo "Checking Java files created or modified between ${START_DATE} and ${TODAY}:"
-          CHANGED_FILES=$(git log --since="${START_DATE}" --until="${TODAY}" --name-only --pretty="" -- "*.java" | sort | uniq)
-          COUNT=$(echo "$CHANGED_FILES" | wc -l)
-          COUNTS+=($COUNT)
-          echo "${LABELS[$i]} Count: $COUNT"
-          done
-
-          DAILY_COUNT=${COUNTS[0]}
-          WEEKLY_COUNT=${COUNTS[1]}
-          MONTHLY_COUNT=${COUNTS[2]}
-          
-          echo -e "\e[31m+==================COUNT===================+";
-          echo -e "\e[32mJava Files Created Yesterday: ${DAILY_COUNT}"
-          echo -e "\e[32mJava Files Created Last 7 Days: ${WEEKLY_COUNT}"
-          echo -e "\e[32mJava Files Created Last 30 Days: ${MONTHLY_COUNT}"
-          echo -e "\e[31m+==================COUNT===================+";
+      - name: Slack Message Send & Statistics
+        run: |
   
           # if [ ${DAILY_COUNT} -lt 1 ]; then 
           #  MSG="더 분발해야 할 것 같아요!😂"
@@ -61,8 +39,7 @@ jobs:
           #  MSG="4 문제 이상 푸셔서, 존경스럽습니다.🎉"
           # fi
           
-          # Slack Message Send & Statistics
-          case ${DAILY_COUNT} in
+          case ${{ env.DAILY_COUNT}} in
             0)
               MSG="더 분발해야 할 것 같아요!😂"
               ;;
@@ -77,7 +54,7 @@ jobs:
               ;;
           esac
           
-          DAILY_MSG="알고리즘 풀기에 딱 좋은 밤이네요!\n*오늘 날짜_(${TODAY})_기준으로, 벌써 *${NOW_YEAR}년 ${NOW_MONTH}월에 ${DAILY_COUNT}문제를 해결하셨어요!💪*\n📊통계를 보면, 이번 주에는 ${WEEKLY_COUNT}문제, 이번 달에는 ${MONTHLY_COUNT}문제를 푸셨습니다! ${MSG}\n자세한 내용을 보시려면 🔗<https://github.com/yeeooni/baekjoon-slove|여기>를 클릭하세요."
+          DAILY_MSG="알고리즘 풀기에 딱 좋은 밤이네요!\n오늘 날짜_(${TODAY})_기준으로, ${{ env.DAILY_COUNT }}문제를 해결하셨어요!💪*\n📊통계를 보면, 이번 주에는 ${{ env.WEEKLY_COUNT }}문제, 이번 달에는 ${{ env.MONTHLY_COUNT }}문제를 푸셨습니다! ${MSG}\n자세한 내용을 보시려면 🔗<https://github.com/yeeooni/baekjoon-slove|여기>를 클릭하세요."
           
           # SLACK channel to SEND
           curl -X POST --data-urlencode "payload={\"text\": \"${DAILY_MSG}\"}" ${{ secrets.SLACK_WEBHOOKS_URL }}
